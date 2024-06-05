@@ -2,18 +2,27 @@
 import React from 'react';
 
 import CartTable from './CartTable';
+import Spinner from "../../../components/Spinner";
+
+// https://courses.joshwcomeau.com/joy-of-react/06-full-stack-react/03.06-ssr-exercises (Neighbourhood shop, solution code)
 
 function CheckoutFlow({
-  items,
+  cardData,
   taxRate,
   handleDeleteItem,
 }) {
+  const { items, isLoading } = cardData;
+
   if (items.length === 0) {
     return (
       <div className="checkout-flow empty">
-        <p>Your Cart is Empty</p>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <p>Your cart is empty</p>
+        )}
       </div>
-    );
+    )
   }
 
   const priceFormatter = new Intl.NumberFormat('en-US', {

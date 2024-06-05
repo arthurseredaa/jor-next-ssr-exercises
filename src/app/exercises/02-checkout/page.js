@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import DATA from './data';
 import reducer from './reducer';
@@ -7,11 +7,22 @@ import StoreItem from './StoreItem';
 import CheckoutFlow from './CheckoutFlow';
 import './styles.css';
 
+const initialState = {
+  items: [],
+  isLoading: true,
+}
+
 function CheckoutExercise() {
-  const [items, dispatch] = React.useReducer(
+  const [cardData, dispatch] = React.useReducer(
     reducer,
-    []
+    initialState
   );
+
+  useEffect(() => {
+    dispatch({
+      type: 'initialize'
+    })
+  }, []);
 
   return (
     <>
@@ -34,7 +45,7 @@ function CheckoutExercise() {
         </div>
 
         <CheckoutFlow
-          items={items}
+          cardData={cardData}
           taxRate={0.15}
           handleDeleteItem={(item) =>
             dispatch({
